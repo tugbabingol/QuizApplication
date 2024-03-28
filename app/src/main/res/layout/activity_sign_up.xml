@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context=".SignUpActivity">
+
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="149dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginEnd="125dp"
+        android:fontFamily="monospace"
+        android:text="SIGN UP"
+        android:textColor="@color/white"
+        android:textSize="34sp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:text="Full Name"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        tools:ignore="DuplicateIds" />
+    <EditText
+        android:id="@+id/nameText"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="50dp"
+        android:ems="10"
+        android:hint="Enter your full name"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="@color/sudoku_background"
+        android:textColor="@color/white"/>
+
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameText"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:text="E-Mail"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        tools:ignore="DuplicateIds" />
+
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="50dp"
+        android:ems="10"
+        android:hint="Your email goes here"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textColorHint="@color/sudoku_background"
+        android:textColor="@color/white"
+        android:autofillHints="" />
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailText"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Password"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        tools:ignore="DuplicateIds" />
+
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="50dp"
+        android:ems="10"
+        android:hint="********"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textColorHint="@color/sudoku_background"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/kayitbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="154dp"
+
+        android:onClick="register"
+        android:text="Sign Up" />
+
+    <TextView
+        android:id="@+id/gosignin"
+        android:layout_width="173dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kayitbutton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="false"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="94dp"
+        android:autoLink="web"
+        android:clickable="true"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:minHeight="48dp"
+        android:onClick="sign_in"
+        android:text="I'm already member"
+        android:textColor="@color/white"
+        android:textColorLink="#00BCD4"
+        android:textStyle="italic" />
+
+
+</RelativeLayout>

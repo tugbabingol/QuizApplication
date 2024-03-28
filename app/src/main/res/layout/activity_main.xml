@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="114dp"
+        android:fontFamily="serif-monospace"
+        android:gravity="center_horizontal"
+        android:text="QUIZ APPLICATION"
+        android:textColor="#E2F2F4"
+        android:textSize="35dp" />
+
+    <Button
+        android:id="@+id/sudoku"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="280dp"
+        android:backgroundTint="#6A4D9E"
+        android:fontFamily="monospace"
+
+        android:text="Sudoku"
+        android:textColor="@color/black"
+        app:cornerRadius="32dp" />
+
+    <ImageView
+        android:id="@+id/logout_image"
+        android:layout_width="37dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="28dp"
+        android:clickable="true"
+        android:onClick="logout"
+        app:srcCompat="@drawable/logout"
+        tools:ignore="TouchTargetSizeCheck"
+        android:contentDescription="Logout"/>
+
+
+</RelativeLayout>
