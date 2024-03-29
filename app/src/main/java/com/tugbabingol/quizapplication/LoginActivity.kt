@@ -24,8 +24,12 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
-
-
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // Kullanıcı zaten oturum açmış, ana ekrana yönlendir
+            startActivity(Intent(this, MainActivity::class.java))
+            finish() // LoginActivity'yi kapat
+        }
 
     }
 
