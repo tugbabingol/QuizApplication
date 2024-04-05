@@ -17,6 +17,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : FirebaseFirestore
+    ///val email = findViewById<EditText>(R.id.email)
+   // val emailText = email.text.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -24,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
+        database = FirebaseFirestore.getInstance()
         val currentUser = auth.currentUser
         if (currentUser != null) {
             // Kullanıcı zaten oturum açmış, ana ekrana yönlendir
@@ -38,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun login(view: View){
+    fun login(view: View ){
 
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
@@ -46,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnCompleteListener { task ->
             if (task.isSuccessful){
                 val guncelKullanici = auth.currentUser?.email.toString()
+
                 Toast.makeText(this,"Hoşgeldin: ${guncelKullanici}", Toast.LENGTH_LONG).show()
 
                 val intent = Intent(this, MainActivity::class.java)
@@ -56,6 +60,10 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this,exception.localizedMessage,Toast.LENGTH_LONG).show()
         }
 
+
+    }
+
+    fun get_name(){
 
     }
 

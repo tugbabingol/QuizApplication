@@ -31,5 +31,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun go_flag(view: View){
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
 
 }

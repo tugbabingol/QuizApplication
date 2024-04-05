@@ -21,7 +21,7 @@
         android:textSize="35dp" />
 
     <Button
-        android:id="@+id/sudoku"
+        android:id="@+id/flagButton"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -30,9 +30,10 @@
         android:layout_marginTop="280dp"
         android:backgroundTint="#6A4D9E"
         android:fontFamily="monospace"
-
-        android:text="Sudoku"
+        android:onClick="go_flag"
+        android:text="Flags"
         android:textColor="@color/black"
+        android:textSize="20dp"
         app:cornerRadius="32dp" />
 
     <ImageView
