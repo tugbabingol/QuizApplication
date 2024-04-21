@@ -3,5 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_background">#0F0127</color>
-    <color name="sudoku_background">#9296AE</color>
+    <color name="flag_background">#A3BFC4</color>
 </resources>

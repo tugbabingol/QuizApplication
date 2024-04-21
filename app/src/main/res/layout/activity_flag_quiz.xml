@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/flag_background"
+    tools:context=".FlagQuizActivity">
+
+
+    <TextView
+        android:layout_width="54dp"
+        android:layout_height="42dp"
+        android:fontFamily="serif-monospace"
+        android:text="Skor"
+        android:textAlignment="textEnd"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="95dp" />
+
+    <ImageView
+        android:id="@+id/flag_imageView"
+        android:layout_width="281dp"
+        android:layout_height="158dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="180dp" />
+
+    <TextView
+        android:id="@+id/ASık"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/shape"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flag_imageView"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/BSık"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/shape"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ASık"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/CSık"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/shape"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BSık"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/DSık"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/shape"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CSık"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
