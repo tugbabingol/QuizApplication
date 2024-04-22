@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun go_flag(view: View){
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, FlagQuizActivity::class.java)
         startActivity(intent)
     }
 

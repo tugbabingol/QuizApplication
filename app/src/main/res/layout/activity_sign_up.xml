@@ -37,6 +37,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         tools:ignore="DuplicateIds" />
+
     <EditText
         android:id="@+id/nameText"
         android:layout_width="281dp"
@@ -51,8 +52,8 @@
         android:hint="Enter your full name"
         android:inputType="text"
         android:minHeight="48dp"
-        android:textColorHint="@color/sudoku_background"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/flag_background" />
 
 
     <TextView
@@ -78,13 +79,13 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="50dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="Your email goes here"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        android:textColorHint="@color/sudoku_background"
         android:textColor="@color/white"
-        android:autofillHints="" />
+        android:textColorHint="@color/flag_background" />
     <TextView
         android:id="@+id/password"
         android:layout_width="89dp"
@@ -112,8 +113,8 @@
         android:hint="********"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:textColorHint="@color/sudoku_background"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/flag_background" />
 
     <Button
         android:id="@+id/kayitbutton"

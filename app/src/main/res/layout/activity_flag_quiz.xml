@@ -34,7 +34,7 @@
         tools:layout_editor_absoluteY="180dp" />
 
     <TextView
-        android:id="@+id/ASık"
+        android:id="@+id/SecenekA"
         android:layout_width="271dp"
         android:layout_height="33dp"
         android:layout_marginStart="50dp"
@@ -51,7 +51,7 @@
 
 
     <TextView
-        android:id="@+id/BSık"
+        android:id="@+id/SecenekB"
         android:layout_width="271dp"
         android:layout_height="33dp"
         android:layout_marginStart="50dp"
@@ -63,11 +63,11 @@
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ASık"
+        app:layout_constraintTop_toBottomOf="@+id/SecenekA"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/CSık"
+        android:id="@+id/SecenekC"
         android:layout_width="271dp"
         android:layout_height="33dp"
         android:layout_marginStart="50dp"
@@ -79,11 +79,11 @@
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BSık"
+        app:layout_constraintTop_toBottomOf="@+id/SecenekB"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/DSık"
+        android:id="@+id/SecenekD"
         android:layout_width="271dp"
         android:layout_height="33dp"
         android:layout_marginStart="50dp"
@@ -95,7 +95,9 @@
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CSık"
+        app:layout_constraintTop_toBottomOf="@+id/SecenekC"
         tools:ignore="MissingConstraints" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
