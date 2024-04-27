@@ -57,7 +57,11 @@ class FlagQuizActivity : AppCompatActivity() {
                 }
             }
 
+        }.addOnFailureListener { exception ->
+            // Bayrak adı ve zorluk seviyesi alınırken hata olursa hata mesajını göster
+            println("Bayrak bilgileri alınamadı: ${exception.message}")
         }
+
     }
 
     private fun randomFlagNameGet(): String {
