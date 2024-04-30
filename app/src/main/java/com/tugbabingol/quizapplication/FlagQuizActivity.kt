@@ -1,14 +1,19 @@
 package com.tugbabingol.quizapplication
 
+
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlin.random.Random
 
@@ -38,13 +43,28 @@ class FlagQuizActivity : AppCompatActivity() {
 
     }
 
+
     fun bayrakBilgileriniGetir(imageView: ImageView, secenekA: TextView, secenekB: TextView, secenekC: TextView, secenekD: TextView){
         db.collection("Flags").get().addOnSuccessListener { documents->
             val randomflag = documents.documents.random()
             val countryName = randomflag.getString("flagname")
             val flagUrl = randomflag.get("flagurl") as String
 
-            Picasso.get().load(flagUrl).into(imageView)
+
+
+
+
+            Picasso.get().load(flagUrl).centerCrop() // crop the image to fit the view
+                .into(imageView, object : Callback {
+                    override fun onSuccess(){
+                        println("Başarılı")
+                    }
+                    override fun onError(e: Exception) {
+                        // Error loading image
+                        Log.e("Picasso", "Error loading image: $e")
+                    }
+                })
+
 
             // Rastgele bayrak adını ve zorluk seviyesini rastgele şıklara yerleştir
             val options = listOf(secenekA, secenekB, secenekC, secenekD)
