@@ -54,7 +54,7 @@ class FlagQuizActivity : AppCompatActivity() {
 
 
 
-            Picasso.get().load(flagUrl).centerCrop() // crop the image to fit the view
+            Picasso.get().load(flagUrl).resize(700,700).centerCrop() // crop the image to fit the view
                 .into(imageView, object : Callback {
                     override fun onSuccess(){
                         println("Başarılı")
@@ -66,26 +66,32 @@ class FlagQuizActivity : AppCompatActivity() {
                 })
 
 
-            // Rastgele bayrak adını ve zorluk seviyesini rastgele şıklara yerleştir
+            // Rastgele bayrak adını rastgele şıklara yerleştir
             val options = listOf(secenekA, secenekB, secenekC, secenekD)
             val randomIndex = Random.nextInt(0, options.size)
             options[randomIndex].text = countryName
 
             for (i in 0 until options.size) {
                 if (i != randomIndex) {
-                    options[i].text = randomFlagNameGet()
+                    randomFlagNameGet(options[i])
                 }
             }
 
         }.addOnFailureListener { exception ->
-            // Bayrak adı ve zorluk seviyesi alınırken hata olursa hata mesajını göster
+            // Bayrak adı alınırken hata olursa hata mesajını göster
             println("Bayrak bilgileri alınamadı: ${exception.message}")
         }
 
     }
 
-    private fun randomFlagNameGet(): String {
-        val bayrakAdlari = listOf("Bayrak 1", "Bayrak 2", "Bayrak 3", "Bayrak 4") // Firebase'deki bayrak adlarına göre güncelle
-        return bayrakAdlari.random()
+    private fun randomFlagNameGet(textView: TextView) {
+
+        db.collection("Flags").get().addOnSuccessListener { documents ->
+            val randomFlag = documents.documents.random()
+            val countryName = randomFlag.getString("flagname")
+            textView.text = countryName
+        }.addOnFailureListener { exception ->
+            Log.e("FlagQuizActivity", "Rastgele bayrak adı alınamadı: ${exception.message}")
+        }
     }
 }
