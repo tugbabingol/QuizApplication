@@ -30,17 +30,17 @@
         android:id="@+id/flag_imageView"
         android:layout_width="287dp"
         android:layout_height="156dp"
-        android:scaleType="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="393dp"
+        android:scaleType="center"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:srcCompat="@drawable/ic_launcher_background"
-        tools:ignore="MissingConstraints"
-        android:visibility="visible"/>
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/SecenekA"
