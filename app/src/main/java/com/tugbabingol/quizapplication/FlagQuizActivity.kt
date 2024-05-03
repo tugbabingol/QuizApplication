@@ -2,6 +2,7 @@ package com.tugbabingol.quizapplication
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -114,12 +115,31 @@ class FlagQuizActivity : AppCompatActivity() {
             // Yanlış cevap
             wrongAttempts++
             if (wrongAttempts >= 3) {
+
                 // Üç yanlış denemeden sonra oyunu bitir
 
                 Log.d("FlagQuizActivity", "Oyunu kaybettiniz!")
                 finish()
             } else {
+                val heart3= findViewById<ImageView>(R.id.heart3)
+                val heart2= findViewById<ImageView>(R.id.heart2)
+                val heart1= findViewById<ImageView>(R.id.heart1)
+                if (wrongAttempts==1){
+                    heart3.visibility = View.INVISIBLE
+                }else if(wrongAttempts == 2){
+                    heart2.visibility = View.INVISIBLE
+                }else{
+                    heart1.visibility = View.INVISIBLE
+                }
                 Log.d("FlagQuizActivity", "Yanlış cevap!")
+
+                startGame(
+                    findViewById(R.id.flag_imageView),
+                    findViewById(R.id.SecenekA),
+                    findViewById(R.id.SecenekB),
+                    findViewById(R.id.SecenekC),
+                    findViewById(R.id.SecenekD)
+                )
             }
         }
     }
