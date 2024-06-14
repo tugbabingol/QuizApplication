@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import org.w3c.dom.Text
 import kotlin.random.Random
 
 class FlagQuizActivity : AppCompatActivity() {
@@ -65,6 +66,7 @@ class FlagQuizActivity : AppCompatActivity() {
             correctCountry = randomFlag.getString("flagname") ?: ""
             val flagUrl = randomFlag.getString("flagurl") ?: ""
 
+
             Picasso.get().load(flagUrl).resize(500, 500).centerCrop()
                 .into(imageView, object : Callback {
                     override fun onSuccess() {
@@ -101,6 +103,7 @@ class FlagQuizActivity : AppCompatActivity() {
     }
 
     fun checkAnswer(selectedTextView: TextView) {
+        var sayac : Int = 0
         if (selectedTextView.text == correctCountry) {
             // Doğru cevap, yeni bir oyun başlat
             startGame(
@@ -111,6 +114,8 @@ class FlagQuizActivity : AppCompatActivity() {
                 findViewById(R.id.SecenekD)
             )
             wrongAttempts = 0
+            sayac = sayac+ 10
+            findViewById<TextView>(R.id.sayacTextView).text.toString()
         } else {
             // Yanlış cevap
             wrongAttempts++

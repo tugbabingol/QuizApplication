@@ -103,5 +103,17 @@
         android:textAlignment="center"
         android:textSize="25dp" />
 
+    <TextView
+        android:id="@+id/sayacTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="73dp"
+        android:text=" "
+        android:textSize="25dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 
 </RelativeLayout>
