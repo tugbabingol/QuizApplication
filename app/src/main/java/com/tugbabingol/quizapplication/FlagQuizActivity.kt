@@ -63,8 +63,9 @@ class FlagQuizActivity : AppCompatActivity() {
     private fun startGame(imageView: ImageView, secenekA: TextView, secenekB: TextView, secenekC: TextView, secenekD: TextView) {
         db.collection("Flags").get().addOnSuccessListener { documents ->
             val randomFlag = documents.documents.random()
-            correctCountry = randomFlag.getString("flagname") ?: ""
             val flagUrl = randomFlag.getString("flagurl") ?: ""
+            correctCountry = randomFlag.getString("flagname") ?: ""
+
 
 
             Picasso.get().load(flagUrl).resize(500, 500).centerCrop()
