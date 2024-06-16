@@ -10,8 +10,14 @@ import android.view.ViewGroup
 class LogoFragment : Fragment() {
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
 
-    override fun onCreateView(
+        }
+    }
+
+        override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
