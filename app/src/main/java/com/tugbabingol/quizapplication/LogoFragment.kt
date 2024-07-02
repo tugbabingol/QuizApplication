@@ -1,5 +1,6 @@
 package com.tugbabingol.quizapplication
 
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -22,12 +23,17 @@ class LogoFragment : Fragment() {
     private var wrongAttempts: Int = 0
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         db = FirebaseFirestore.getInstance()
 
+
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +49,15 @@ class LogoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         val logoImageView: ImageView = view.findViewById(R.id.logo_imageView)
         val SecenekA: TextView = view.findViewById(R.id.SecenekA)
         val SecenekB: TextView = view.findViewById(R.id.SecenekB)
         val SecenekC: TextView = view.findViewById(R.id.SecenekC)
         val SecenekD: TextView = view.findViewById(R.id.SecenekD)
+        val sayacTextView: TextView = view.findViewById(R.id.sayacTextView)
+
 
         startGame(logoImageView,SecenekA,SecenekB,SecenekC,SecenekD)
     }
@@ -98,16 +108,53 @@ class LogoFragment : Fragment() {
     }
 
 
-    fun checkAnswer(selectedTextView:TextView){
+    fun checkAnswer(selectedTextView: TextView, sayacTextView: TextView){
         var sayac : Int =0
 
         if (selectedTextView.text == correctBrand){
-            startGame(
-                imageView = R.id.logo_imageView,
 
+            startGame(
+                requireView().findViewById(R.id.logo_imageView),
+                requireView().findViewById(R.id.SecenekA),
+                requireView().findViewById(R.id.SecenekB),
+                requireView().findViewById(R.id.SecenekC),
+                requireView().findViewById(R.id.SecenekD),
             )
+            wrongAttempts = 0
+            sayac = sayac+10
+            sayacTextView.text = sayac.toString()
+
+
+        }else{
+            wrongAttempts++
+            if (wrongAttempts >= 3) {
+
+                // Üç yanlış denemeden sonra oyunu bitir
+
+                Log.d("FlagQuizActivity", "Oyunu kaybettiniz!")
+                activity?.onBackPressed()
+            }else {
+                val heart3 = requireView().findViewById<ImageView>(R.id.broken_heart3)
+                val heart2 = requireView().findViewById<ImageView>(R.id.broken_heart2)
+                val heart1 = requireView().findViewById<ImageView>(R.id.broken_heart)
+                when (wrongAttempts) {
+                    1 -> heart3.visibility = View.INVISIBLE
+                    2 -> heart2.visibility = View.INVISIBLE
+                    3 -> heart1.visibility = View.INVISIBLE
+                }
+                Log.d("FlagQuizActivity", "Yanlış cevap!")
+
+                startGame(
+                    requireView().findViewById(R.id.logo_imageView),
+                    requireView().findViewById(R.id.SecenekA),
+                    requireView().findViewById(R.id.SecenekB),
+                    requireView().findViewById(R.id.SecenekC),
+                    requireView().findViewById(R.id.SecenekD),
+                )
+            }
         }
     }
+
 
 
 }
