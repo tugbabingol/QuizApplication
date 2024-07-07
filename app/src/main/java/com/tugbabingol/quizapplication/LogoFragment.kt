@@ -56,8 +56,22 @@ class LogoFragment : Fragment() {
         val SecenekB: TextView = view.findViewById(R.id.SecenekB)
         val SecenekC: TextView = view.findViewById(R.id.SecenekC)
         val SecenekD: TextView = view.findViewById(R.id.SecenekD)
-        val sayacTextView: TextView = view.findViewById(R.id.sayacTextView)
 
+
+
+        SecenekA.setOnClickListener{
+            checkAnswer(SecenekA)
+        }
+
+        SecenekB.setOnClickListener{
+            checkAnswer(SecenekB)
+        }
+        SecenekC.setOnClickListener{
+            checkAnswer(SecenekC)
+        }
+        SecenekD.setOnClickListener{
+            checkAnswer(SecenekD)
+        }
 
         startGame(logoImageView,SecenekA,SecenekB,SecenekC,SecenekD)
     }
@@ -108,8 +122,8 @@ class LogoFragment : Fragment() {
     }
 
 
-    fun checkAnswer(selectedTextView: TextView, sayacTextView: TextView){
-        var sayac : Int =0
+    fun checkAnswer(selectedTextView: TextView){
+
 
         if (selectedTextView.text == correctBrand){
 
@@ -121,8 +135,7 @@ class LogoFragment : Fragment() {
                 requireView().findViewById(R.id.SecenekD),
             )
             wrongAttempts = 0
-            sayac = sayac+10
-            sayacTextView.text = sayac.toString()
+
 
 
         }else{

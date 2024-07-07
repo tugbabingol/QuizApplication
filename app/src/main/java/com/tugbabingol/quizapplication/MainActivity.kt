@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +35,18 @@ class MainActivity : AppCompatActivity() {
     fun go_flag(view: View){
         val intent = Intent(this, FlagQuizActivity::class.java)
         startActivity(intent)
+    }
+
+    fun go_logo(view: View){
+        openFragment()
+    }
+
+    private fun openFragment() {
+        val fragment = LogoFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,46 +9,77 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="114dp"
-        android:fontFamily="serif-monospace"
-        android:gravity="center_horizontal"
-        android:text="QUIZ APPLICATION"
-        android:textColor="#E2F2F4"
-        android:textSize="35dp" />
-
-    <Button
-        android:id="@+id/flagButton"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="280dp"
-        android:backgroundTint="#6A4D9E"
-        android:fontFamily="monospace"
-        android:onClick="go_flag"
-        android:text="Flags"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:cornerRadius="32dp" />
-
     <ImageView
         android:id="@+id/logout_image"
         android:layout_width="37dp"
         android:layout_height="32dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:clickable="true"
+        android:contentDescription="Logout"
         android:onClick="logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logout"
-        tools:ignore="TouchTargetSizeCheck"
-        android:contentDescription="Logout"/>
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:gravity="center_horizontal"
+            android:text="QUIZ APPLICATION"
+            android:textColor="#E2F2F4"
+            android:textSize="35dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <Button
+            android:id="@+id/flagButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:backgroundTint="#6A4D9E"
+            android:fontFamily="monospace"
+            android:onClick="go_flag"
+            android:text="Flags"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:cornerRadius="32dp" />
+
+        <Button
+            android:id="@+id/logoButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:backgroundTint="#6A4D9E"
+            android:fontFamily="monospace"
+            android:onClick="go_logo"
+            android:text="Logo"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:cornerRadius="32dp" />
+
+    </LinearLayout>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
