@@ -6,14 +6,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import kotlin.random.Random
 
 class FlagQuizActivity : AppCompatActivity() {
@@ -21,6 +20,11 @@ class FlagQuizActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var correctCountry: String
     private var wrongAttempts: Int = 0
+    private lateinit var imageFlag: ImageView
+    private lateinit var secenekA: TextView
+    private lateinit var secenekB: TextView
+    private lateinit var secenekC: TextView
+    private lateinit var secenekD: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +38,13 @@ class FlagQuizActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
-        val imageFlag = findViewById<ImageView>(R.id.flag_imageView)
-        val secenekA = findViewById<TextView>(R.id.SecenekA)
-        val secenekB = findViewById<TextView>(R.id.SecenekB)
-        val secenekC = findViewById<TextView>(R.id.SecenekC)
-        val secenekD = findViewById<TextView>(R.id.SecenekD)
+        imageFlag = findViewById(R.id.flag_imageView)
+        secenekA = findViewById(R.id.SecenekA)
+        secenekB = findViewById(R.id.SecenekB)
+        secenekC = findViewById(R.id.SecenekC)
+        secenekD = findViewById(R.id.SecenekD)
 
-        startGame(imageFlag, secenekA, secenekB, secenekC, secenekD)
+        startGame()
 
         secenekA.setOnClickListener {
             checkAnswer(secenekA)
@@ -57,95 +61,98 @@ class FlagQuizActivity : AppCompatActivity() {
         secenekD.setOnClickListener {
             checkAnswer(secenekD)
         }
-
     }
 
-    private fun startGame(imageView: ImageView, secenekA: TextView, secenekB: TextView, secenekC: TextView, secenekD: TextView) {
-        db.collection("Flags").get().addOnSuccessListener { documents ->
-            val randomFlag = documents.documents.random()
-            val flagUrl = randomFlag.getString("flagurl") ?: ""
-            correctCountry = randomFlag.getString("flagname") ?: ""
+    private fun startGame() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val flagData = loadFlagData()
+            if (flagData != null) {
+                val (flagUrl, flagName) = flagData
+                correctCountry = flagName
 
-
-
-            Picasso.get().load(flagUrl).resize(500, 500).centerCrop()
-                .into(imageView, object : Callback {
-                    override fun onSuccess() {
-                        Log.d("Picasso", "Image loaded successfully")
-                    }
-
-                    override fun onError(e: Exception) {
-                        Log.e("Picasso", "Error loading image: $e")
-                    }
-                })
-
-            val options = listOf(secenekA, secenekB, secenekC, secenekD)
-            val randomIndex = Random.nextInt(0, options.size)
-            options[randomIndex].text = correctCountry
-
-            for (i in options.indices) {
-                if (i != randomIndex) {
-                    randomFlagNameGet(options[i])
-                }
+                loadFlagImage(flagUrl)
+                setOptions(flagName)
+            } else {
+                Log.e("FlagQuizActivity", "Failed to fetch flag information")
             }
-        }.addOnFailureListener { exception ->
-            Log.e("FlagQuizActivity", "Failed to fetch flag information: ${exception.message}")
         }
     }
 
-    private fun randomFlagNameGet(textView: TextView) {
-        db.collection("Flags").get().addOnSuccessListener { documents ->
+    private suspend fun loadFlagData(): Pair<String, String>? = withContext(Dispatchers.IO) {
+        try {
+            val documents = db.collection("Flags").get().await()
+            val randomFlag = documents.documents.random()
+            val flagUrl = randomFlag.getString("flagurl") ?: return@withContext null
+            val flagName = randomFlag.getString("flagname") ?: return@withContext null
+            return@withContext Pair(flagUrl, flagName)
+        } catch (e: Exception) {
+            Log.e("FlagQuizActivity", "Error fetching flag data: ${e.message}")
+            return@withContext null
+        }
+    }
+
+    private suspend fun loadFlagImage(flagUrl: String) = withContext(Dispatchers.Main) {
+        Picasso.get().load(flagUrl).resize(500, 500).centerCrop().into(imageFlag, object : com.squareup.picasso.Callback {
+            override fun onSuccess() {
+                Log.d("Picasso", "Image loaded successfully")
+            }
+
+            override fun onError(e: Exception) {
+                Log.e("Picasso", "Error loading image: $e")
+            }
+        })
+    }
+
+    private suspend fun setOptions(correctOption: String) = withContext(Dispatchers.IO) {
+        val options = listOf(secenekA, secenekB, secenekC, secenekD)
+        val randomIndex = Random.nextInt(0, options.size)
+        options[randomIndex].text = correctOption
+
+        for (i in options.indices) {
+            if (i != randomIndex) {
+                randomFlagNameGet(options[i])
+            }
+        }
+    }
+
+    private suspend fun randomFlagNameGet(textView: TextView) = withContext(Dispatchers.IO) {
+        try {
+            val documents = db.collection("Flags").get().await()
             val randomFlag = documents.documents.random()
             val countryName = randomFlag.getString("flagname") ?: ""
-            textView.text = countryName
-        }.addOnFailureListener { exception ->
-            Log.e("FlagQuizActivity", "Failed to fetch random flag name: ${exception.message}")
+            withContext(Dispatchers.Main) {
+                textView.text = countryName
+            }
+        } catch (e: Exception) {
+            Log.e("FlagQuizActivity", "Failed to fetch random flag name: ${e.message}")
         }
     }
 
-    fun checkAnswer(selectedTextView: TextView) {
-        var sayac : Int = 0
+    private fun checkAnswer(selectedTextView: TextView) {
+        var sayac: Int = 0
         if (selectedTextView.text == correctCountry) {
-            // Doğru cevap, yeni bir oyun başlat
-            startGame(
-                findViewById(R.id.flag_imageView),
-                findViewById(R.id.SecenekA),
-                findViewById(R.id.SecenekB),
-                findViewById(R.id.SecenekC),
-                findViewById(R.id.SecenekD)
-            )
+            startGame()
             wrongAttempts = 0
-            sayac = sayac+ 10
-            findViewById<TextView>(R.id.sayacTextView).text.toString()
+            sayac += 10
+            findViewById<TextView>(R.id.sayacTextView).text = sayac.toString()
         } else {
-            // Yanlış cevap
             wrongAttempts++
             if (wrongAttempts >= 3) {
-
-                // Üç yanlış denemeden sonra oyunu bitir
-
                 Log.d("FlagQuizActivity", "Oyunu kaybettiniz!")
                 finish()
             } else {
-                val heart3= findViewById<ImageView>(R.id.heart3)
-                val heart2= findViewById<ImageView>(R.id.heart2)
-                val heart1= findViewById<ImageView>(R.id.heart1)
-                if (wrongAttempts==1){
+                val heart3 = findViewById<ImageView>(R.id.heart3)
+                val heart2 = findViewById<ImageView>(R.id.heart2)
+                val heart1 = findViewById<ImageView>(R.id.heart1)
+                if (wrongAttempts == 1) {
                     heart3.visibility = View.INVISIBLE
-                }else if(wrongAttempts == 2){
+                } else if (wrongAttempts == 2) {
                     heart2.visibility = View.INVISIBLE
-                }else{
+                } else {
                     heart1.visibility = View.INVISIBLE
                 }
                 Log.d("FlagQuizActivity", "Yanlış cevap!")
-
-                startGame(
-                    findViewById(R.id.flag_imageView),
-                    findViewById(R.id.SecenekA),
-                    findViewById(R.id.SecenekB),
-                    findViewById(R.id.SecenekC),
-                    findViewById(R.id.SecenekD)
-                )
+                startGame()
             }
         }
     }

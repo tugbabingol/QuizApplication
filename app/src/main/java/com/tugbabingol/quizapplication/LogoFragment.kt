@@ -57,7 +57,7 @@ class LogoFragment : Fragment() {
         val SecenekC: TextView = view.findViewById(R.id.SecenekC)
         val SecenekD: TextView = view.findViewById(R.id.SecenekD)
 
-
+        startGame(logoImageView,SecenekA,SecenekB,SecenekC,SecenekD)
 
         SecenekA.setOnClickListener{
             checkAnswer(SecenekA)
@@ -73,7 +73,7 @@ class LogoFragment : Fragment() {
             checkAnswer(SecenekD)
         }
 
-        startGame(logoImageView,SecenekA,SecenekB,SecenekC,SecenekD)
+
     }
 
     private fun startGame(imageView: ImageView, SecenekA:TextView, SecenekB:TextView, SecenekC:TextView, SecenekD: TextView){
