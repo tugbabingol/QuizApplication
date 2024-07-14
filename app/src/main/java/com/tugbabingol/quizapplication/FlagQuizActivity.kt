@@ -20,6 +20,7 @@ class FlagQuizActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var correctCountry: String
     private var wrongAttempts: Int = 0
+    private  var sayac: Int = 0
     private lateinit var imageFlag: ImageView
     private lateinit var secenekA: TextView
     private lateinit var secenekB: TextView
@@ -129,12 +130,19 @@ class FlagQuizActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(selectedTextView: TextView) {
-        var sayac: Int = 0
+
+
+
         if (selectedTextView.text == correctCountry) {
-            startGame()
-            wrongAttempts = 0
             sayac += 10
-            findViewById<TextView>(R.id.sayacTextView).text = sayac.toString()
+
+            Log.e("sayac", "sayac arttı")
+
+            findViewById<TextView>(R.id.sayacTextView).text = sayac.toString() // TextView'de sayacı göster
+
+            startGame()
+
+
         } else {
             wrongAttempts++
             if (wrongAttempts >= 3) {

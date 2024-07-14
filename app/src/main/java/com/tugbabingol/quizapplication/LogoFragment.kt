@@ -21,7 +21,7 @@ class LogoFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var correctBrand: String
     private var wrongAttempts: Int = 0
-
+    private var sayac:Int =0
 
 
 
