@@ -36,12 +36,12 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun sign_up(view:View){
+    fun sign_up(){
         val intent = Intent(this,SignUpActivity::class.java)
         startActivity(intent)
     }
 
-    fun login(view: View ){
+    fun login(){
 
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)

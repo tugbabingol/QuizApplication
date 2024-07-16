@@ -1,11 +1,13 @@
 package com.tugbabingol.quizapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -147,7 +149,7 @@ class FlagQuizActivity : AppCompatActivity() {
             wrongAttempts++
             if (wrongAttempts >= 3) {
                 Log.d("FlagQuizActivity", "Oyunu kaybettiniz!")
-                finish()
+                showGameOverDialog()
             } else {
                 val heart3 = findViewById<ImageView>(R.id.heart3)
                 val heart2 = findViewById<ImageView>(R.id.heart2)
@@ -158,10 +160,30 @@ class FlagQuizActivity : AppCompatActivity() {
                     heart2.visibility = View.INVISIBLE
                 } else {
                     heart1.visibility = View.INVISIBLE
+
                 }
                 Log.d("FlagQuizActivity", "Yanlış cevap!")
                 startGame()
             }
         }
+    }
+
+    private fun showGameOverDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Game Over")
+        Log.e("kontrol", "Error loading image: $sayac")
+        builder.setMessage("Your game has ended. Your score is ${sayac}.Would you like to return to the main menu?")
+        builder.setPositiveButton("Main Menu") { dialog, which ->
+            // Ana menüye dönmek için gereken işlemleri yapın
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("Cancel") { dialog, which ->
+            // İptal işlemi
+            dialog.dismiss()
+        }
+        builder.setCancelable(false) // Kullanıcı diyalogu kapatamaz
+        val dialog = builder.create()
+        dialog.show()
     }
 }
