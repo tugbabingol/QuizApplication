@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
 
@@ -36,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun sign_up(){
+    fun sign_up(view: View){
         val intent = Intent(this,SignUpActivity::class.java)
         startActivity(intent)
     }
@@ -62,6 +64,8 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+
+
 
     fun get_name(){
 

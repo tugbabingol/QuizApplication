@@ -11,6 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
@@ -20,6 +24,7 @@ import kotlin.random.Random
 class FlagQuizActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var auth : FirebaseAuth
     private lateinit var correctCountry: String
     private var wrongAttempts: Int = 0
     private  var sayac: Int = 0
@@ -28,6 +33,10 @@ class FlagQuizActivity : AppCompatActivity() {
     private lateinit var secenekB: TextView
     private lateinit var secenekC: TextView
     private lateinit var secenekD: TextView
+
+    private lateinit var database: DatabaseReference
+// ...
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +49,8 @@ class FlagQuizActivity : AppCompatActivity() {
         }
 
         db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+        val database = Firebase.database.reference
 
         imageFlag = findViewById(R.id.flag_imageView)
         secenekA = findViewById(R.id.SecenekA)
@@ -64,6 +75,7 @@ class FlagQuizActivity : AppCompatActivity() {
         secenekD.setOnClickListener {
             checkAnswer(secenekD)
         }
+
     }
 
     private fun startGame() {
@@ -75,6 +87,7 @@ class FlagQuizActivity : AppCompatActivity() {
 
                 loadFlagImage(flagUrl)
                 setOptions(flagName)
+                set_flagscor(sayac)
             } else {
                 Log.e("FlagQuizActivity", "Failed to fetch flag information")
             }
@@ -150,6 +163,7 @@ class FlagQuizActivity : AppCompatActivity() {
             if (wrongAttempts >= 3) {
                 Log.d("FlagQuizActivity", "Oyunu kaybettiniz!")
                 showGameOverDialog()
+
             } else {
                 val heart3 = findViewById<ImageView>(R.id.heart3)
                 val heart2 = findViewById<ImageView>(R.id.heart2)
@@ -173,6 +187,7 @@ class FlagQuizActivity : AppCompatActivity() {
         builder.setTitle("Game Over")
         Log.e("kontrol", "Error loading image: $sayac")
         builder.setMessage("Your game has ended. Your score is ${sayac}.Would you like to return to the main menu?")
+
         builder.setPositiveButton("Main Menu") { dialog, which ->
             // Ana menüye dönmek için gereken işlemleri yapın
             val intent = Intent(this, MainActivity::class.java)
@@ -185,5 +200,54 @@ class FlagQuizActivity : AppCompatActivity() {
         builder.setCancelable(false) // Kullanıcı diyalogu kapatamaz
         val dialog = builder.create()
         dialog.show()
+
+    }
+
+
+
+
+    private suspend fun set_flagscor(sayac:Int) {
+        val guncelKullanici = auth.currentUser?.email.toString()
+        Log.e("kullanici", "$guncelKullanici")
+        /*try {
+            val documents = db.collection("Flags").get().await()
+            val randomFlag = documents.documents.random()
+            val countryName = randomFlag.getString("flagname") ?: ""
+            withContext(Dispatchers.Main) {
+                textView.text = countryName
+            }
+        } catch (e: Exception) {
+            Log.e("FlagQuizActivity", "Failed to fetch random flag name: ${e.message}")
+        }*/
+        try {
+
+
+            val userdb = db.collection("User").get().await()
+            val kullanici = userdb.documents.random()
+            val email = kullanici.getString("email").toString()
+
+            /*database.collection("User").add(user)
+            .addOnCompleteListener  { task ->
+                if (task.isSuccessful) {
+                    finish()
+                } else {
+                    val errorMessage = task.exception?.localizedMessage ?: "Bilinmeyen hata oluştu"
+                    Toast.makeText(this, "İşlem başarısız: $errorMessage", Toast.LENGTH_LONG).show()
+                    Log.e("FirestoreError", errorMessage)
+                }
+            }
+            .addOnFailureListener { exception ->
+                val errorMessage = exception.localizedMessage ?: "Bilinmeyen hata oluştu"
+                Toast.makeText(this, "İşlem başarısız: $errorMessage", Toast.LENGTH_LONG).show()
+                Log.e("FirestoreError", errorMessage)
+            }*/
+            if (guncelKullanici == email){
+                db.collection("User").document().set(set_flagscor(sayac))
+            }
+
+        }catch (e: Exception){
+            Log.e("email", "${e.message}")
+        }
+
     }
 }

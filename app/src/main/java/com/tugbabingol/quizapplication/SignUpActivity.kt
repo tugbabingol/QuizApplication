@@ -2,8 +2,10 @@ package com.tugbabingol.quizapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +46,7 @@ class SignUpActivity : AppCompatActivity() {
         //email ve şifreleri veritabanına kaydedilde
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
            if(task.isSuccessful){
+               set_user_data(name,email)
                val intent = Intent(this, LoginActivity::class.java)
                startActivity(intent)
            }
@@ -52,21 +55,6 @@ class SignUpActivity : AppCompatActivity() {
 
         }
 
-        val user = hashMapOf<String,Any>()
-        user["fullname"] = name
-        user["email"] = email
-
-        database.collection("User").add(user)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    finish()
-                } else {
-                    Toast.makeText(this, "İşlem başarısız: " + task.exception?.localizedMessage, Toast.LENGTH_LONG).show()
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "İşlem başarısız: " + exception.localizedMessage, Toast.LENGTH_LONG).show()
-            }
 
     }
 
@@ -74,4 +62,32 @@ class SignUpActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
+
+    private fun set_user_data(name:String,email:String){
+
+
+        val user = hashMapOf<String,Any>()
+        user["fullname"] = name
+        user["email"] = email
+        user["flagscor"] = 0
+        user["logoscor"]= 0
+
+        database.collection("User").add(user)
+            .addOnCompleteListener  { task ->
+                if (task.isSuccessful) {
+                    finish()
+                } else {
+                    val errorMessage = task.exception?.localizedMessage ?: "Bilinmeyen hata oluştu"
+                    Toast.makeText(this, "İşlem başarısız: $errorMessage", Toast.LENGTH_LONG).show()
+                    Log.e("FirestoreError", errorMessage)
+                }
+            }
+            .addOnFailureListener { exception ->
+                val errorMessage = exception.localizedMessage ?: "Bilinmeyen hata oluştu"
+                Toast.makeText(this, "İşlem başarısız: $errorMessage", Toast.LENGTH_LONG).show()
+                Log.e("FirestoreError", errorMessage)
+            }
+    }
+
+
 }
