@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -13,10 +14,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
+import com.tugbabingol.quizapplication.Utils.FreezeGame
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import kotlin.random.Random
@@ -76,6 +82,8 @@ class FlagQuizActivity : AppCompatActivity() {
             checkAnswer(secenekD)
         }
 
+
+
     }
 
     private fun startGame() {
@@ -87,7 +95,8 @@ class FlagQuizActivity : AppCompatActivity() {
 
                 loadFlagImage(flagUrl)
                 setOptions(flagName)
-                set_flagscor(sayac)
+                getCurrentUserFlagScore()
+
             } else {
                 Log.e("FlagQuizActivity", "Failed to fetch flag information")
             }
@@ -196,6 +205,10 @@ class FlagQuizActivity : AppCompatActivity() {
         builder.setNegativeButton("Cancel") { dialog, which ->
             // İptal işlemi
             dialog.dismiss()
+            val gameView: RelativeLayout = findViewById(R.id.main)
+            val freeze = FreezeGame()
+            freeze.freeze(gameView)
+
         }
         builder.setCancelable(false) // Kullanıcı diyalogu kapatamaz
         val dialog = builder.create()
@@ -206,48 +219,44 @@ class FlagQuizActivity : AppCompatActivity() {
 
 
 
-    private suspend fun set_flagscor(sayac:Int) {
-        val guncelKullanici = auth.currentUser?.email.toString()
-        Log.e("kullanici", "$guncelKullanici")
-        /*try {
-            val documents = db.collection("Flags").get().await()
-            val randomFlag = documents.documents.random()
-            val countryName = randomFlag.getString("flagname") ?: ""
-            withContext(Dispatchers.Main) {
-                textView.text = countryName
-            }
-        } catch (e: Exception) {
-            Log.e("FlagQuizActivity", "Failed to fetch random flag name: ${e.message}")
-        }*/
-        try {
+    fun getCurrentUserFlagScore() {
+        // Firebase Authentication instance'ını al
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
 
+        // Kullanıcı oturumu açmışsa
+        if (currentUser != null) {
+            val email = currentUser.email
 
-            val userdb = db.collection("User").get().await()
-            val kullanici = userdb.documents.random()
-            val email = kullanici.getString("email").toString()
+            // Firebase Realtime Database instance'ını al
+            val database = FirebaseDatabase.getInstance()
+            val usersRef = database.getReference("User")
 
-            /*database.collection("User").add(user)
-            .addOnCompleteListener  { task ->
-                if (task.isSuccessful) {
-                    finish()
-                } else {
-                    val errorMessage = task.exception?.localizedMessage ?: "Bilinmeyen hata oluştu"
-                    Toast.makeText(this, "İşlem başarısız: $errorMessage", Toast.LENGTH_LONG).show()
-                    Log.e("FirestoreError", errorMessage)
+            // Kullanıcının e-posta adresine göre sorgu oluştur
+            val query = usersRef.orderByChild("email").equalTo(email)
+
+            // Sorguyu dinle
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (userSnapshot in dataSnapshot.children) {
+                        // flagscore alanına eriş
+                        val flagScore = userSnapshot.child("flagscore").getValue(Int::class.java)
+
+                        println("çalıştı")
+                        // flagscore'u kullan
+                        println("Flag Score: $flagScore")
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                val errorMessage = exception.localizedMessage ?: "Bilinmeyen hata oluştu"
-                Toast.makeText(this, "İşlem başarısız: $errorMessage", Toast.LENGTH_LONG).show()
-                Log.e("FirestoreError", errorMessage)
-            }*/
-            if (guncelKullanici == email){
-                db.collection("User").document().set(set_flagscor(sayac))
-            }
 
-        }catch (e: Exception){
-            Log.e("email", "${e.message}")
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Hata durumunu ele al
+                    println("Database error: ${databaseError.message}")
+                }
+            })
+        } else {
+            println("No user is logged in.")
         }
-
     }
+
+
 }
