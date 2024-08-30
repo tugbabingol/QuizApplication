@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 /*dilara@gmail.com
 * 123456*/
@@ -26,13 +27,34 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         auth = FirebaseAuth.getInstance()
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    true
+                }
+                R.id.navigation_scoreboard -> {
+                    // Dashboard seçeneği tıklandığında yapılacak işlemler
+                    true
+                }
+                R.id.navigation_logout -> {
+                    // Notifications seçeneği tıklandığında yapılacak işlemler
+                    auth.signOut()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
-    fun logout(view: View) {
-        auth.signOut()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+
+
 
     fun go_flag(view: View){
         val intent = Intent(this, FlagQuizActivity::class.java)
