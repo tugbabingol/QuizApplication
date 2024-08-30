@@ -1,11 +1,10 @@
-package com.tugbabingol.quizapplication.Utils
+package com.tugbabingol.quizapplication
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.tugbabingol.quizapplication.R
 
 class ScoreBoardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

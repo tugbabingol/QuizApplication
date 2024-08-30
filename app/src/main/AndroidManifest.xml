@@ -16,7 +16,7 @@
         android:theme="@style/Theme.QuizApplication"
         tools:targetApi="31">
         <activity
-            android:name=".Utils.ScoreBoardActivity"
+            android:name=".ScoreBoardActivity"
             android:exported="false" />
         <activity
             android:name=".FlagQuizActivity"

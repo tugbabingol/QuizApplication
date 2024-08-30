@@ -79,6 +79,7 @@
         android:minHeight="48dp"
         android:onClick="sign_up"
         android:text="Sign Up"
+        android:textAlignment="center"
         android:textColor="@color/white" />
 
 </RelativeLayout>
