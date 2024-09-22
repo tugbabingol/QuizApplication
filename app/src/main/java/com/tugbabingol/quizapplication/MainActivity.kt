@@ -34,10 +34,12 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.navigation_scoreboard -> {
-                    // Dashboard seçeneği tıklandığında yapılacak işlemler
+                    val intent = Intent(this, ScoreBoardActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.navigation_logout -> {

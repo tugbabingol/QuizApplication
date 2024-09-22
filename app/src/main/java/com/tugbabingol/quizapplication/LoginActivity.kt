@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
             finish() // LoginActivity'yi kapat
         }
 
+
     }
 
     fun sign_up(view: View){
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun login(){
+    fun login(view:View){
 
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
