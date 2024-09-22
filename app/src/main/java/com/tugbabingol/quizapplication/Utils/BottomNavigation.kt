@@ -13,7 +13,7 @@ class BottomNavigation {
     private lateinit var auth : FirebaseAuth
     fun bottomNavigation(bottomNavigationView: BottomNavigationView){
         auth = FirebaseAuth.getInstance()
-
+    /*kjnkbk*/
         /*bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
