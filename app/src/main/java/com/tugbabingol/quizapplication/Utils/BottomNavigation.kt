@@ -1,6 +1,8 @@
 package com.tugbabingol.quizapplication.Utils
 
+
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -9,15 +11,15 @@ import com.tugbabingol.quizapplication.MainActivity
 import com.tugbabingol.quizapplication.R
 import com.tugbabingol.quizapplication.ScoreBoardActivity
 
-class BottomNavigation {
+class BottomNavigation: AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     fun bottomNavigation(bottomNavigationView: BottomNavigationView){
         auth = FirebaseAuth.getInstance()
     /*kjnkbk*/
-        /*bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    val intent = Intent(MainActivity::class.java)
+                    val intent = Intent(this,MainActivity::class.java)
                     startActivity(intent)
                     true
                 }
@@ -35,6 +37,6 @@ class BottomNavigation {
                 }
                 else -> false
             }
-        }*/
+        }
     }
 }
